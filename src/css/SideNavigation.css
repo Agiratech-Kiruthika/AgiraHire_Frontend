@@ -1,31 +1,40 @@
 .sidenav {
-    height: 100%; /* Full-height */
-    width: 250px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    background-color: #111; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
-  }
-  
-  .sidenav ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidenav ul li {
-    padding: 10px 15px;
-  }
-  
-  .sidenav ul li a {
-    text-decoration: none;
-    color: white;
-    display: block;
-  }
-  
-  .sidenav ul li a:hover {
-    background-color: #333;
-  }
-  
+  height: 100%; /* Full-height */
+  width: 250px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+.sidenav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidenav ul li {
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.sidenav ul li a {
+  text-decoration: none;
+  background-color: rgb(58, 59, 59);
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  display: block;
+}
+
+.sidenav ul li a:hover {
+  background-color: #333;
+}
+
+/* Style for the active link */
+.sidenav ul li a.active {
+  background-color: #555; /* Change the background color for the active link */
+  font-weight: bold; /* Make the active link text bold */
+}

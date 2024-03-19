@@ -1,16 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link component
+import { NavLink } from 'react-router-dom'; // Import NavLink component
 import '../css/SideNavigation.css'; // Import CSS file
 
 const SideNavigation = () => {
   return (
     <nav className="sidenav">
       <ul>
-       
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/opportunity">Opportunities</Link></li>
-        <li><Link to="/signup">Register</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
+        <li><NavLink exact to="/" activeClassName="active">Home</NavLink></li>
+        <li><NavLink to="/opportunity" activeClassName="active">Opportunities</NavLink></li>
+        <li><NavLink to="/signup" activeClassName="active">Register</NavLink></li>
+        <li><NavLink to="/contact" activeClassName="active">Contact</NavLink></li>
       </ul>
     </nav>
   );

@@ -4,6 +4,7 @@ import SideNavigation from './SideNavigation';
 
 const Dashboard = () => {
   return (
+    
     <div className="dashboard">
       <SideNavigation />
       <div className="dashboard-content">
