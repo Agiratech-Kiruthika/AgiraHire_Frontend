@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './Roleform.css'; // Import CSS file
 
 const RoleForm = () => {
@@ -26,8 +28,12 @@ const RoleForm = () => {
         name: '',
         description: ''
       });
+      // Show success toast
+      toast.success('Role added successfully!');
     } catch (error) {
       console.error('Error:', error);
+      // Show error toast
+      toast.error('Failed to add role. Please try again.');
     }
   };
 
@@ -58,6 +64,7 @@ const RoleForm = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

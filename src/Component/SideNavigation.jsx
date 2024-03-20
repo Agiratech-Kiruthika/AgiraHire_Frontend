@@ -9,7 +9,8 @@ const SideNavigation = () => {
         <li><NavLink exact to="/" activeClassName="active">Home</NavLink></li>
         <li><NavLink to="/opportunity" activeClassName="active">Opportunities</NavLink></li>
         <li><NavLink to="/signup" activeClassName="active">Register</NavLink></li>
-        <li><NavLink to="/contact" activeClassName="active">Contact</NavLink></li>
+        <li><NavLink to="/role" activeClassName="active">Role</NavLink></li>
+        
       </ul>
     </nav>
   );
