@@ -1,6 +1,7 @@
 // Dashboard.js
 import React from 'react';
 import SideNavigation from './SideNavigation';
+import '../css/Dashboard.css'
 
 const Dashboard = () => {
   return (

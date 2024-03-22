@@ -1,0 +1,76 @@
+@keyframes example {
+    from {
+      background-color: rgb(230, 114, 114);
+    }
+    to {
+      background-color: rgb(236, 236, 96);
+    }
+  }
+  
+  .home_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    animation-name: example;
+    animation-duration: 60s; /* Corrected animation duration */
+    animation-iteration-count: infinite; /* Added to make the animation loop infinitely */
+  }
+  
+   /* / background-color: #e62c2c; */
+
+    /* background-image: url('../assests/Hiringimage.jpg');
+    background-size: cover; /* This property ensures the background image covers the entire container */
+    /* background-position: center; 
+
+    color: rgb(85, 41, 41); */ 
+  
+  
+  .leftContent,
+  .rightContent {
+    flex: 1;
+  }
+  
+  .leftContent {
+    padding: 20px;
+  }
+  
+  .rightContent {
+    padding: 20px;
+    /* background-color: #ffffff; */
+    border-radius: 5px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  @media (min-width: 768px) {
+    .home_container {
+      justify-content: space-around;
+    }
+  
+    .leftContent {
+      padding: 20px 40px;
+    }
+  
+    .rightContent {
+      padding: 20px 40px;
+    }
+  
+    h1 {
+      font-size: 28px;
+    }
+  
+    p {
+      font-size: 18px;
+    }
+  }
+  

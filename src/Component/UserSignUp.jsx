@@ -1,96 +1,181 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { 
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel
+} from '@mui/material';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import "../css/UserSignUp.css";
 
 export default function UserSignUp() {
   const [empID, setEmpID] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+  const [roles, setRoles] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetchRoles(); // Fetch roles when component mounts
+  }, []);
+
+  const fetchRoles = async () => {
+    try {
+      const response = await axios.get('https://localhost:7199/api/Auth/roles');
+      const responseData = response.data;
+      if (responseData.success && responseData.data && Array.isArray(responseData.data)) {
+        setRoles(responseData.data); // Update roles state with fetched data
+      } else {
+        console.error('Error fetching roles: Response data format is incorrect');
+        toast.error("An error occurred while fetching roles.");
+      }
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      toast.error("An error occurred while fetching roles.");
+    }
+  };
+
   const handleChangeEmpID = (e) => {
-    const value = e.target.value;
-    console.log('EmpID:', value); // Debugging statement
-    setEmpID(value);
+    setEmpID(e.target.value);
+  };
+
+  const handleChangeSelectedRole = (e) => {
+    setSelectedRole(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Clear previous errors
-
-    // Validation checks
-    if (!empID || !email || !password) {
-      setError("All fields are required");
+    if (!empID || !email || !password || !selectedRole) {
+      toast.error("All fields are required");
       return;
     }
     if (!validateEmail(email)) {
-      setError("Invalid email format");
+      toast.error("Invalid email format");
       return;
     }
 
     try {
-      const response = await axios.post('https://localhost:7199/api/User/addUser', {
+      const userResponse = await axios.post('https://localhost:7199/api/User/addUser', {
         employee_Id: empID,
         email: email,
         password: password,
         isDeleted: false
       });
-      alert('User signed up successfully:', response.data);
-      navigate('/dashboard');
 
-      // Optionally, redirect to another page after successful signup
+      const userId = userResponse.data.userId;
+
+      const roleResponse = await axios.post('https://localhost:7199/api/Auth/assignRole', {
+        UserId: userId,
+        RoleIds: [selectedRole] // Sending selectedRole as an array
+      });
+
+      toast.success('User signed up successfully');
+      // Delay before navigating to the dashboard
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 5000);
+      
     } catch (error) {
       console.error('Error signing up:', error);
-      // Handle errors (e.g., display error messages)
       if (error.response && error.response.data) {
-        setError(error.response.data); // Display error message from backend
-      }  else {
-        setError("An error occurred while signing up. Please try again later.");
+        toast.error(error.response.data);
+      } else {
+        toast.error("An error occurred while signing up. Please try again later.");
       }
     }
   };
 
   const validateEmail = (email) => {
-    // Basic email format validation
     const re = /\S+@\S+\.\S+/;
     return re.test(String(email).toLowerCase());
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: '0 auto', padding: '20px', border: '1px solid #ccc', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-      <h2>User Signup</h2>
-      <div style={{ marginBottom: '20px' }}>
-        <label>Employee ID:</label>
-        <input
-          type="text"
-          value={empID}
-          onChange={handleChangeEmpID}
-          style={{ width: '100%', padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '5px' }}
-        />
-      </div>
-      <div style={{ marginBottom: '20px' }}>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ width: '100%', padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '5px' }}
-        />
-      </div>
-      <div style={{ marginBottom: '20px' }}>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: '100%', padding: '10px', fontSize: '16px', border: '1px solid #ccc', borderRadius: '5px' }}
-        />
-      </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <div>
-        <button type="submit" style={{ width: '100%', padding: '10px', fontSize: '16px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Sign Up</button>
-      </div>
-    </form>
+    <>
+      <ToastContainer />
+      <Box
+        className="container"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <Box className="formContainer">
+          <Typography variant="h5">User Signup</Typography>
+          <form onSubmit={handleSubmit}>
+            <div>
+            <FormControl fullWidth>
+            <TextField
+              id="employee-id-input"
+              label="Employee ID"
+              variant="outlined"
+              type="text"
+              value={empID}
+              onChange={handleChangeEmpID}
+            />
+          </FormControl>
+
+            </div>
+            <div>
+              <FormControl fullWidth>
+               
+                <TextField
+                  id="outlined-basic"
+                  label="Email"
+                  variant="outlined"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </FormControl>
+            </div>
+            <div>
+              <FormControl fullWidth>
+               
+                <TextField
+                  id="outlined-basic"
+                  label="Password"
+                  variant="outlined"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormControl>
+            </div>
+            <div>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel id="select-role-label">Select Role</InputLabel>
+              <Select
+                labelId="select-role-label"
+                id="select-role"
+                value={selectedRole}
+                onChange={handleChangeSelectedRole}
+                label="Select Role"
+              >
+                <MenuItem value="">
+                  <em>Select role</em>
+                </MenuItem>
+                {roles.map(role => (
+                  <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+
+            <Button type="submit" variant="contained">Sign Up</Button>
+          </form>
+        </Box>
+      </Box>
+    </>
   );
 }

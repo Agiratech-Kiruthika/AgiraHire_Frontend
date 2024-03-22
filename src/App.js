@@ -10,6 +10,9 @@ import Login from './Component/Login';
 import SideNavigation from './Component/SideNavigation';
 import Dashboard from './Component/Dashboard';
 import RoleForm from './Component/Role';
+import 'mdb-react-ui-kit/dist/css/mdb.min.css'
+import SignUp from './Component/SignUp';
+import UseMemo from './Component/UseMemo';
 
 
 function App() {
@@ -18,8 +21,6 @@ function App() {
        
       <div className="App">
      
-        
-      
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path="/opportunityForm" element={<OpportunityForm />} /> {/* Use element prop */}
@@ -30,6 +31,8 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/role' element={<RoleForm/>}/>
+          <Route path='/usememo' element={<UseMemo/>}/>
+          {/* <Route path='/signup' element={<SignUp/>}/> */}
 
 
 
