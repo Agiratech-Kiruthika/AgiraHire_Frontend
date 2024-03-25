@@ -1,16 +1,25 @@
+// Login.js
 import React, { useState } from 'react';
-import { Box, Typography, FormControl, TextField, Select, MenuItem, InputLabel, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Box, Typography, FormControl, TextField, Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Axios from 'axios';
+import '../css/Login.css';
+import Profile from './Profile';
+import Dashboard from '../Pages/Dashboard'; // Import Dashboard component
+import SideNavigation from './SideNavigation';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setEmailError('');
     setPasswordError('');
@@ -25,26 +34,42 @@ const Login = () => {
       return;
     }
 
-    // Here you can add further validation or authentication logic
+    try {
+      const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password });
 
-    // Redirect to dashboard or perform other actions
-    toast.success('Logged in successfully');
+      if (response.data.message === 'Login successful') {
+        setIsLoggedIn(true);
+        setUserEmail(email); // Set user's email upon successful login
+        toast.success('Logged in successfully');
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 3000);
+      } else {
+        toast.error(response.data.message || 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error(error.response.data.message || 'Unauthorized. Please try again.');
+        } else if (error.response.status === 400) {
+          toast.error(error.response.data.message || 'Bad request. Please check your inputs.');
+        } else {
+          toast.error('An unexpected error occurred. Please try again.');
+        }
+      } else {
+        toast.error('An unexpected error occurred. Please try again.');
+      }
+    }
   };
 
   return (
     <>
       <ToastContainer />
-      <Box
-//className="container"
-        // sx={{
-        //   display: 'flex',
-        //   justifyContent: 'center',
-        //   alignItems: 'center',
-        //   height: '100vh',
-        // }}
-      >
-        <Box className="formContainer">
-          <Typography variant="h5">Login</Typography>
+      <Box className="login_container">
+        <Box className="login_formContainer">
+          <Typography className="typo_login" variant="h6">
+            Login
+          </Typography>
           <form onSubmit={handleSubmit}>
             <div>
               <FormControl fullWidth>
@@ -75,11 +100,15 @@ const Login = () => {
               </FormControl>
             </div>
             <div>
-              <Button type="submit" variant="contained" fullWidth>Log in</Button>
+              <Button type="submit" variant="contained" fullWidth>
+                Log in
+              </Button>
             </div>
           </form>
         </Box>
       </Box>
+      {/* {isLoggedIn && <Profile email={email} />} */}
+      {/* Render Dashboard component with user's email if isLoggedIn is true */}
     </>
   );
 };

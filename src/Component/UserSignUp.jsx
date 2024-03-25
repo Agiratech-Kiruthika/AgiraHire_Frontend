@@ -9,7 +9,11 @@ import {
   Select,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
 } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,6 +25,7 @@ export default function UserSignUp() {
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [roles, setRoles] = useState([]);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,7 +66,16 @@ export default function UserSignUp() {
       toast.error("Invalid email format");
       return;
     }
+    if (!validatePassword(password)) {
+      toast.error("Password must be at least 8 characters long and contain at least one special character");
+      return;
+    }
 
+    // Open the confirmation dialog only if all fields are filled
+    setOpen(true);
+  };
+
+  const handleConfirmSubmit = async () => {
     try {
       const userResponse = await axios.post('https://localhost:7199/api/User/addUser', {
         employee_Id: empID,
@@ -81,7 +95,7 @@ export default function UserSignUp() {
       // Delay before navigating to the dashboard
       setTimeout(() => {
         navigate('/dashboard');
-      }, 5000);
+      }, 3000);
       
     } catch (error) {
       console.error('Error signing up:', error);
@@ -90,6 +104,9 @@ export default function UserSignUp() {
       } else {
         toast.error("An error occurred while signing up. Please try again later.");
       }
+    } finally {
+      // Close the confirmation dialog
+      setOpen(false);
     }
   };
 
@@ -98,11 +115,36 @@ export default function UserSignUp() {
     return re.test(String(email).toLowerCase());
   };
 
+
+  const validatePassword = (password) => {
+    // Check if the password length is at least 8 characters
+    if (password.length < 8) {
+      return false;
+    }
+  
+    // Check if the password contains at least one special character
+    const specialCharacters = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    if (!specialCharacters.test(password)) {
+      return false;
+    }
+  
+    // If both conditions are met, return true
+    return true;
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <ToastContainer />
       <Box
-        className="container"
+        className="signup_container"
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -110,27 +152,25 @@ export default function UserSignUp() {
           height: '100vh',
         }}
       >
-        <Box className="formContainer">
-          <Typography variant="h5">User Signup</Typography>
+        <Box className="signup_formContainer">
+          <Typography className="typo_signup" variant="h6">Signup</Typography>
           <form onSubmit={handleSubmit}>
             <div>
-            <FormControl fullWidth>
-            <TextField
-              id="employee-id-input"
-              label="Employee ID"
-              variant="outlined"
-              type="text"
-              value={empID}
-              onChange={handleChangeEmpID}
-            />
-          </FormControl>
-
+              <FormControl fullWidth>
+                <TextField
+                  id="employee-id-input"
+                  label="Employee ID"
+                  variant="outlined"
+                  type="text"
+                  value={empID}
+                  onChange={handleChangeEmpID}
+                />
+              </FormControl>
             </div>
             <div>
               <FormControl fullWidth>
-               
                 <TextField
-                  id="outlined-basic"
+                  id="email-input"
                   label="Email"
                   variant="outlined"
                   type="email"
@@ -141,9 +181,8 @@ export default function UserSignUp() {
             </div>
             <div>
               <FormControl fullWidth>
-               
                 <TextField
-                  id="outlined-basic"
+                  id="password-input"
                   label="Password"
                   variant="outlined"
                   type="password"
@@ -153,29 +192,42 @@ export default function UserSignUp() {
               </FormControl>
             </div>
             <div>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel id="select-role-label">Select Role</InputLabel>
-              <Select
-                labelId="select-role-label"
-                id="select-role"
-                value={selectedRole}
-                onChange={handleChangeSelectedRole}
-                label="Select Role"
-              >
-                <MenuItem value="">
-                  <em>Select role</em>
-                </MenuItem>
-                {roles.map(role => (
-                  <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="select-role-label">Select Role</InputLabel>
+                <Select
+                  labelId="select-role-label"
+                  id="select-role"
+                  value={selectedRole}
+                  onChange={handleChangeSelectedRole}
+                  label="Select Role"
+                >
+                  <MenuItem value="">
+                    <em>Select role</em>
+                  </MenuItem>
+                  {roles.map(role => (
+                    <MenuItem key={role.id} value={role.id}>{role.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
 
-            <Button type="submit" variant="contained">Sign Up</Button>
+            <Button type="submit" variant="contained" disabled={!empID || !email || !password || !selectedRole}>Sign Up</Button>
           </form>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Confirm Submission</DialogTitle>
+            <DialogContent>
+              Are you sure you want to submit the form?
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={handleConfirmSubmit} variant="contained" autoFocus>
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Box>
     </>
   );
 }
+

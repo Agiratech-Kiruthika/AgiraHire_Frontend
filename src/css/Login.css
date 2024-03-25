@@ -1,14 +1,14 @@
 
   
-  .signup_container {
+  .login_container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #b43939; /* Light gray background color */
+    
   }
   
-  .signup_formContainer {
+  .login_formContainer {
     width: 400px;
     padding: 20px;
     /* border: 1px solid #ccc; */
@@ -17,20 +17,20 @@
     background-color: #ffffff; 
   }
   
-  .signup_formContainer form {
+  .login_formContainer form {
     display: flex;
     flex-direction: column;
   }
   
-  .signup_formContainer form > div {
+  .login_formContainer form > div {
     margin-bottom: 20px;
   }
   
-  .signup_formContainer form button {
+  .login_formContainer form button {
     margin-top: 10px;
   }
 
-  .typo_signup{
+  .typo_login{
     margin-bottom: 30px;
   }
   

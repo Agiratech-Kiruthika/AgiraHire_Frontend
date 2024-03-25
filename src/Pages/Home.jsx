@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Login from './Login'; // Assuming Login component is in a separate file
+import Login from '../Component/Login'; // Assuming Login component is in a separate file
 import "../css/Home.css";
 
 const LoginPageWithContent = () => {
