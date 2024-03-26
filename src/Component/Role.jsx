@@ -42,7 +42,7 @@ const RoleForm = () => {
       <h2>Role Form</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name" className='label'>Name:</label>
           <input
             type="text"
             id="name"
@@ -53,7 +53,7 @@ const RoleForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="description" className='label'>Description:</label>
           <textarea
             id="description"
             name="description"
@@ -62,7 +62,7 @@ const RoleForm = () => {
             required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className='buttonblue'>Submit</button>
       </form>
       <ToastContainer />
     </div>
