@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import './UserList.css'; // Import CSS file
+import '../css/UserList.css'; // Import CSS file
 
 const UserList = () => {
   const [users, setUsers] = useState([]);

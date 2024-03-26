@@ -13,7 +13,12 @@ const SideNavigation = () => {
   return (
     <nav className="sidenav">
       <ul>
-        <li> <Avatar>{initials}</Avatar> </li>
+      <li>
+        <div className="avatar">
+          <Avatar>{initials}</Avatar>
+        </div>
+      </li>
+
         <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
         <li><NavLink to="/opportunity" activeClassName="active">Opportunities</NavLink></li>
         <li><NavLink to="/signup" activeClassName="active">Register</NavLink></li>
