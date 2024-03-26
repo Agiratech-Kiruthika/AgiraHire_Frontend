@@ -1,18 +1,20 @@
-// SideNavigation.js
 import React from 'react';
-import { NavLink } from 'react-router-dom'; // Import NavLink component
-import '../css/SideNavigation.css'; // Import CSS file
+import { useSelector } from 'react-redux'; // Import useSelector hook
+import { NavLink } from 'react-router-dom';
 import { Avatar } from '@mui/material';
+import '../css/SideNavigation.css';
 
+const SideNavigation = () => {
+  const userEmail = useSelector(state => state.email); // Get userEmail from Redux state
+  console.log(userEmail)
 
-const SideNavigation = ({ userEmail=null }) => {
   const initials = userEmail ? userEmail.substring(0, 2).toUpperCase() : '';
+
   return (
     <nav className="sidenav">
-     
       <ul>
         <li> <Avatar>{initials}</Avatar> </li>
-        <li><NavLink  to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
+        <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
         <li><NavLink to="/opportunity" activeClassName="active">Opportunities</NavLink></li>
         <li><NavLink to="/signup" activeClassName="active">Register</NavLink></li>
         <li><NavLink to="/role" activeClassName="active">Role</NavLink></li>

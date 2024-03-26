@@ -1,22 +1,19 @@
-// Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, FormControl, TextField, Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import '../css/Login.css';
-import Profile from './Profile';
-import Dashboard from '../Pages/Dashboard'; // Import Dashboard component
-import SideNavigation from './SideNavigation';
+import  { setEmail as setReduxEmail } from '../Redux/Store.jsx'; // Import setEmail action creator with an alias
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -38,8 +35,7 @@ const Login = () => {
       const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password });
 
       if (response.data.message === 'Login successful') {
-        setIsLoggedIn(true);
-        setUserEmail(email); // Set user's email upon successful login
+        dispatch(setReduxEmail(email)); // Dispatch setEmail action with the email value using alias
         toast.success('Logged in successfully');
         setTimeout(() => {
           navigate('/dashboard');
@@ -107,8 +103,6 @@ const Login = () => {
           </form>
         </Box>
       </Box>
-      {/* {isLoggedIn && <Profile email={email} />} */}
-      {/* Render Dashboard component with user's email if isLoggedIn is true */}
     </>
   );
 };
