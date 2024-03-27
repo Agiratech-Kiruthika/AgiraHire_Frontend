@@ -9,6 +9,7 @@ import Home from '../Pages/Home';
 import Login from '../Component/Login';
 import Dashboard from '../Pages/Dashboard';
 import RoleForm from '../Component/Role';
+import FeedbackForm from '../Component/FeedbackForm';
 
 const RouterPath = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
@@ -23,6 +24,7 @@ const RouterPath = () => {
       <Route path='/userslist' element={<Layout><UserList /></Layout>} />
       <Route path='/dashboard' element={<Layout><Dashboard /></Layout>} />
       <Route path='/role' element={<Layout><RoleForm /></Layout>} />
+      <Route path='/feedback' element={<FeedbackForm/>} />
       {/* Additional routes */}
     </Routes>
   );
