@@ -49,7 +49,7 @@ export default function Opportunity() {
     async function fetchOpportunities() {
       try {
         const response = await axios.get('https://localhost:7199/api/Opportunities');
-        setOpportunity(response.data);
+        setOpportunity(response.data.data );
       } catch (error) {
         toast.error('Error fetching opportunities:', error);
       }
