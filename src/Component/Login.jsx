@@ -39,7 +39,7 @@ const Login = () => {
         toast.success('Logged in successfully');
         setTimeout(() => {
           navigate('/dashboard');
-        }, 3000);
+        }, 2000);
       } else {
         toast.error(response.data.message || 'Login failed. Please try again.');
       }

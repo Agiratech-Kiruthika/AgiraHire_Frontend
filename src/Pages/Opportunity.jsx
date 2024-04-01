@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Typography,
+  IconButton
+} from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
-import Button from '@mui/material/Button';
-import { Dialog, DialogTitle, DialogContent, Typography, IconButton } from '@mui/material';
 import RemoveRedEyeSharpIcon from '@mui/icons-material/RemoveRedEyeSharp';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 // Status text mapping
 const statusText = {
@@ -36,20 +41,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-
-// Opportunity component
 export default function Opportunity() {
   const [opportunity, setOpportunity] = useState([]);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5); // Change the number of rows per page as needed
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchOpportunities() {
       try {
         const response = await axios.get('https://localhost:7199/api/Opportunities');
-        setOpportunity(response.data);
+        setOpportunity(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         toast.error('Error fetching opportunities:', error);
       }
@@ -66,19 +69,18 @@ export default function Opportunity() {
     setDialogOpen(false);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+  const handleAddOpportunity = () => {
+    console.log('Add opportunity clicked');
+    navigate('/opportunityForm');
   };
 
   return (
     <>
       <ToastContainer />
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box display="flex" flexDirection="column" alignItems="center" height="100vh">
+        <Button variant="contained" color="primary" onClick={handleAddOpportunity} style={{ marginBottom: '20px' }}>
+          Add Opportunity
+        </Button>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="opportunities table">
             <TableHead>
@@ -91,10 +93,7 @@ export default function Opportunity() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {(rowsPerPage > 0
-                ? opportunity.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : opportunity
-              ).map((opp) => (
+              {Array.isArray(opportunity) && opportunity.map((opp) => (
                 <StyledTableRow key={opp.opportunity_Id}>
                   <TableCell component="th" scope="row">
                     {opp.position}
@@ -110,19 +109,6 @@ export default function Opportunity() {
                 </StyledTableRow>
               ))}
             </TableBody>
-          
-              <TableFooter>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
-                  colSpan={5}
-                  count={opportunity.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </TableFooter>
-          
           </Table>
         </TableContainer>
         <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="md">
