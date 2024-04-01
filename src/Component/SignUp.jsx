@@ -18,19 +18,20 @@ function SignUp() {
 
   const fetchRoles = async () => {
     try {
-      const response = await axios.get('https://localhost:7199/api/Auth/roles');
-      const responseData = response.data;
-      if (responseData.success && responseData.data && Array.isArray(responseData.data)) {
-        setRoles(responseData.data); // Update roles state with fetched data
-      } else {
-        console.error('Error fetching roles: Response data format is incorrect');
-        setError("An error occurred while fetching roles.");
-      }
+        const response = await axios.get('https://localhost:7199/api/Auth/getroles');
+        const responseData = response.data;
+        if (responseData.data && Array.isArray(responseData.data)) {
+            setRoles(responseData.data); // Update roles state with fetched data
+        } else {
+            console.error('Error fetching roles: Response data format is incorrect');
+            setError("An error occurred while fetching roles.");
+        }
     } catch (error) {
-      console.error('Error fetching roles:', error);
-      setError("An error occurred while fetching roles.");
+        console.error('Error fetching roles:', error);
+        setError("An error occurred while fetching roles.");
     }
-  };
+};
+
 
   const handleChangeEmpID = (e) => {
     setEmpID(e.target.value);
