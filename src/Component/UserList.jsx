@@ -7,13 +7,14 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get('https://localhost:7199/api/User/getUser')
+    axios.get('https://localhost:7199/api/User/getUsers')
       .then((res) => {
         console.log(res.data);
-        setUsers(res.data);
+        setUsers(res.data.users); // Adjust this line
       })
       .catch((err) => console.log(err));
   }, []);
+  
 
   return (
     <div  className="table-container">
