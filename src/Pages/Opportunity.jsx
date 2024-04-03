@@ -21,6 +21,7 @@ import RemoveRedEyeSharpIcon from '@mui/icons-material/RemoveRedEyeSharp';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import CustomPagination from '../Component/CustomPagination'; // Import CustomPagination component
 
 // Status text mapping
 const statusText = {
@@ -40,11 +41,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
 export default function Opportunity() {
   const [opportunity, setOpportunity] = useState([]);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [page, setPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,7 +53,6 @@ export default function Opportunity() {
       try {
         const response = await axios.get('https://localhost:7199/api/Opportunities');
         setOpportunity(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         toast.error('Error fetching opportunities:', error);
       }
@@ -74,6 +74,10 @@ export default function Opportunity() {
     navigate('/opportunityForm');
   };
 
+  const handleChangePage = (newPage) => {
+    setPage(newPage);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -93,7 +97,10 @@ export default function Opportunity() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(opportunity) && opportunity.map((opp) => (
+              {(opportunity.length > 0
+                ? opportunity.slice(page * 5, page * 5 + 5)
+                : opportunity
+              ).map((opp) => (
                 <StyledTableRow key={opp.opportunity_Id}>
                   <TableCell component="th" scope="row">
                     {opp.position}
@@ -111,12 +118,13 @@ export default function Opportunity() {
             </TableBody>
           </Table>
         </TableContainer>
+        <CustomPagination count={opportunity.length} page={page} onChange={handleChangePage} />
         <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="md">
           <DialogTitle>Opportunity Details</DialogTitle>
           <IconButton
             edge="end"
             color="inherit"
-            onClick={handleCloseDialog} // Close the dialog when the close button is clicked
+            onClick={handleCloseDialog}
             sx={{ position: 'absolute', top: 0, right: 0 }}
           >
             <CloseIcon />

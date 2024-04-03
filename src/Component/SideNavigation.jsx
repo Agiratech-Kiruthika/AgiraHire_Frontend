@@ -21,7 +21,7 @@ const SideNavigation = () => {
 
         <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
         <li><NavLink to="/opportunity" activeClassName="active">Opportunities</NavLink></li>
-        <li><NavLink to="/signup" activeClassName="active">Register</NavLink></li>
+        <li><NavLink to="/signup" activeClassName="active">Employees</NavLink></li>
         <li><NavLink to="/role" activeClassName="active">Role</NavLink></li>
       </ul>
     </nav>
