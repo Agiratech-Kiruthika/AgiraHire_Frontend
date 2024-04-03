@@ -18,10 +18,12 @@ import {
 } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import RemoveRedEyeSharpIcon from '@mui/icons-material/RemoveRedEyeSharp';
-import CloseIcon from '@mui/icons-material/Close';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import { styled } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
-import CustomPagination from '../Component/CustomPagination'; // Import CustomPagination component
+
 
 // Status text mapping
 const statusText = {
@@ -45,7 +47,6 @@ export default function Opportunity() {
   const [opportunity, setOpportunity] = useState([]);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [page, setPage] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,15 +75,18 @@ export default function Opportunity() {
     navigate('/opportunityForm');
   };
 
-  const handleChangePage = (newPage) => {
-    setPage(newPage);
-  };
+ 
 
   return (
     <>
       <ToastContainer />
-      <Box display="flex" flexDirection="column" alignItems="center" height="100vh">
-        <Button variant="contained" color="primary" onClick={handleAddOpportunity} style={{ marginBottom: '20px' }}>
+      <Box display="flex" flexDirection="column" alignItems="center" height="100vh" p={2}>
+        <Button
+         variant="contained"
+          color="primary" 
+          onClick={handleAddOpportunity}
+          style={{ marginBottom: '20px' }}
+          startIcon={<AddIcon />}>
           Add Opportunity
         </Button>
         <TableContainer component={Paper}>
@@ -97,28 +101,31 @@ export default function Opportunity() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {(opportunity.length > 0
-                ? opportunity.slice(page * 5, page * 5 + 5)
-                : opportunity
-              ).map((opp) => (
+              {opportunity.map((opp) => (
                 <StyledTableRow key={opp.opportunity_Id}>
-                  <TableCell component="th" scope="row">
+                  <TableCell align="center">
                     {opp.position}
                   </TableCell>
                   <TableCell align="center">{opp.location}</TableCell>
-                  <TableCell align="center">{opp.date_Posted}</TableCell>
+                  <TableCell align="center"> {new Date(opp.date_Posted).toLocaleDateString()}</TableCell>
                   <TableCell align="center">{statusText[opp.status]}</TableCell>
                   <TableCell align="center">
-                    <Button style={{ color: 'red' }} onClick={() => handleViewDetails(opp)}>
+                    <Button style={{ color: '#D37676' }} onClick={() => handleViewDetails(opp)}>
                       <RemoveRedEyeSharpIcon />
+                      
                     </Button>
+                    <Button style={{ color: 'green' }} onClick={() => handleViewDetails(opp)}>
+                      <ModeEditOutlineIcon/>
+                      
+                    </Button>
+                 
                   </TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <CustomPagination count={opportunity.length} page={page} onChange={handleChangePage} />
+    
         <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="md">
           <DialogTitle>Opportunity Details</DialogTitle>
           <IconButton

@@ -1,4 +1,4 @@
-
+/* 
 .App {
   text-align: center;
   background-image: "D:\React\AgiraHire\AgiraHire_Frontend\public\pexels-johannes-plenio-1103970.jpg";
@@ -101,7 +101,7 @@
   border: 1px solid grey;
   padding-left: 8px;
 }
-/* Existing styles */
+
 
 .mainContainer {
   flex-direction: column;
@@ -165,4 +165,4 @@
   border-radius: 8px;
   border: 1px solid grey;
   padding-left: 8px;
-}
+} */
