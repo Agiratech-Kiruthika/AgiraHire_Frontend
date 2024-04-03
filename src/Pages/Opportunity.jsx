@@ -18,9 +18,12 @@ import {
 } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import RemoveRedEyeSharpIcon from '@mui/icons-material/RemoveRedEyeSharp';
-import CloseIcon from '@mui/icons-material/Close';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import { styled } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
+
 
 // Status text mapping
 const statusText = {
@@ -40,7 +43,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
 export default function Opportunity() {
   const [opportunity, setOpportunity] = useState([]);
   const [selectedOpportunity, setSelectedOpportunity] = useState(null);
@@ -52,7 +54,6 @@ export default function Opportunity() {
       try {
         const response = await axios.get('https://localhost:7199/api/Opportunities');
         setOpportunity(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         toast.error('Error fetching opportunities:', error);
       }
@@ -74,11 +75,18 @@ export default function Opportunity() {
     navigate('/opportunityForm');
   };
 
+ 
+
   return (
     <>
       <ToastContainer />
-      <Box display="flex" flexDirection="column" alignItems="center" height="100vh">
-        <Button variant="contained" color="primary" onClick={handleAddOpportunity} style={{ marginBottom: '20px' }}>
+      <Box display="flex" flexDirection="column" alignItems="center" height="100vh" p={2}>
+        <Button
+         variant="contained"
+          color="primary" 
+          onClick={handleAddOpportunity}
+          style={{ marginBottom: '20px' }}
+          startIcon={<AddIcon />}>
           Add Opportunity
         </Button>
         <TableContainer component={Paper}>
@@ -93,30 +101,37 @@ export default function Opportunity() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Array.isArray(opportunity) && opportunity.map((opp) => (
+              {opportunity.map((opp) => (
                 <StyledTableRow key={opp.opportunity_Id}>
-                  <TableCell component="th" scope="row">
+                  <TableCell align="center">
                     {opp.position}
                   </TableCell>
                   <TableCell align="center">{opp.location}</TableCell>
-                  <TableCell align="center">{opp.date_Posted}</TableCell>
+                  <TableCell align="center"> {new Date(opp.date_Posted).toLocaleDateString()}</TableCell>
                   <TableCell align="center">{statusText[opp.status]}</TableCell>
                   <TableCell align="center">
-                    <Button style={{ color: 'red' }} onClick={() => handleViewDetails(opp)}>
+                    <Button style={{ color: '#D37676' }} onClick={() => handleViewDetails(opp)}>
                       <RemoveRedEyeSharpIcon />
+                      
                     </Button>
+                    <Button style={{ color: 'green' }} onClick={() => handleViewDetails(opp)}>
+                      <ModeEditOutlineIcon/>
+                      
+                    </Button>
+                 
                   </TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
+    
         <Dialog open={dialogOpen} onClose={handleCloseDialog} maxWidth="md">
           <DialogTitle>Opportunity Details</DialogTitle>
           <IconButton
             edge="end"
             color="inherit"
-            onClick={handleCloseDialog} // Close the dialog when the close button is clicked
+            onClick={handleCloseDialog}
             sx={{ position: 'absolute', top: 0, right: 0 }}
           >
             <CloseIcon />
