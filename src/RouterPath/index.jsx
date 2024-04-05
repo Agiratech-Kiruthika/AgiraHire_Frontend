@@ -8,6 +8,7 @@ import UserList from '../Component/UserList';
 import Home from '../Pages/Home';
 import Dashboard from '../Pages/Dashboard';
 import RoleForm from '../Component/Role';
+import RoleList from '../Component/RoleList';
 
 const RouterPath = () => {
   // Get user role from Redux store
