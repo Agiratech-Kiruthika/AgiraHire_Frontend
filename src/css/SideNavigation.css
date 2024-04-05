@@ -36,8 +36,9 @@
   font-weight: bold; /* Make the active link text bold */
 }
 
-.sidenav ul li .avatar {
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Center items vertically */
-  margin-right: auto; /* Move the avatar to the far right */
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
