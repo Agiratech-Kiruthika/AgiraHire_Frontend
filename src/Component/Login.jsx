@@ -3,18 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, FormControl, TextField, Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import '../css/Login.css';
-import  { setEmail as setReduxEmail } from '../Redux/Store.jsx'; // Import setEmail action creator with an alias
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { setEmail, setUserRole } from '../Redux/Store.jsx'; // Update the path accordingly
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmailState] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,11 +36,27 @@ const Login = () => {
       const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password });
 
       if (response.data.message === 'Login successful') {
-        dispatch(setReduxEmail(email)); // Dispatch setEmail action with the email value using alias
+        const decodedToken = jwtDecode(response.data.data);
+        console.log(decodedToken);
+        const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        console.log(userRole);
+        dispatch(setEmail(email)); // Dispatch action to set email in Redux store
+        dispatch(setUserRole(userRole));
         toast.success('Logged in successfully');
         setTimeout(() => {
           navigate('/dashboard');
         }, 1000);
+        
+         // Dispatch action to set user role in Redux store
+
+        // if (userRole === 'Admin') {
+        //   toast.success('Logged in successfully');
+        //   setTimeout(() => {
+        //     navigate('/dashboard');
+        //   }, 1000);
+        // } else {
+        //   toast.error('Access denied. You are not authorized to access this page.');
+        // }
       } else {
         toast.error(response.data.message || 'Login failed. Please try again.');
       }
@@ -75,7 +92,7 @@ const Login = () => {
                   variant="outlined"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setEmailState(e.target.value)} // Update state using setEmailState
                   error={!!emailError}
                   helperText={emailError}
                 />

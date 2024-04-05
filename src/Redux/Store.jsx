@@ -5,29 +5,33 @@ import storage from 'redux-persist/lib/storage';
 // Define initial state
 const initialState = {
   email: '',
+  role: '',
 };
 
-// Create a slice
-const emailSlice = createSlice({
-  name: 'email',
+// Create a slice for managing user email and role
+const userSlice = createSlice({
+  name: 'user',
   initialState,
   reducers: {
     setEmail(state, action) {
       state.email = action.payload;
     },
+    setUserRole(state, action) {
+      state.role = action.payload;
+    },
   },
 });
 
 // Extract action creators from the slice
-export const { setEmail } = emailSlice.actions;
+export const { setEmail, setUserRole } = userSlice.actions;
 
-// Create reducer using the slice's reducer
+// Create a persisted reducer
 const persistedReducer = persistReducer(
   {
     key: 'root',
     storage,
   },
-  emailSlice.reducer
+  userSlice.reducer
 );
 
 // Create the Redux store using configureStore from Redux Toolkit
