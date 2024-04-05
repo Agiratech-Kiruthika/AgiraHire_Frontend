@@ -33,51 +33,52 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const UserList = () => {
-  const [users, setUsers] = useState([]);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get('https://localhost:7199/api/User/getUsers')
-      .then((res) => {
-        setUsers(res.data.users);
-      })
-      .catch((err) => {
-        console.error('Error fetching users:', err);
-        toast.error('Error fetching users');
-      });
-  }, []);
+const RoleList = () => {
+    const [roles, setRoles] = useState([]);
+    const navigate = useNavigate();
 
-  const handleAddUsers = () => {
-    navigate('/signup');
-  };
+    useEffect(() =>{
+        axios.get('https://localhost:7199/api/Auth/getroles')
+        .then((res) => {
+            setRoles(res.data.data);
+        })
+        .catch((err) =>{
+            console.error('Error fetching roles:',err);
+            toast.error('Error fetching the roles')
+        });
+    },[]);
 
-  return (
-    <>
-      <ToastContainer />
-      <Box display="flex" flexDirection="column" alignItems="center" height="100vh" p={2}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleAddUsers}
-          style={{ marginBottom: '20px' }}
-          startIcon={<AddIcon />}
-        >
-          Add Users
-        </Button>
-        <TableContainer component={Paper}>
+    const handleAddRoles = () =>{
+        navigate('/role');
+    };
+
+    return (
+        <>
+          <ToastContainer />
+          <Box display="flex" flexDirection="column" alignItems="center" height="100vh" p={2}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddRoles}
+              style={{ marginBottom: '20px' }}
+              startIcon={<AddIcon />}
+            >
+              Add Role
+            </Button> 
+            <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="users table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Employee ID</StyledTableCell>
-                <StyledTableCell>Email</StyledTableCell>
+                <StyledTableCell>Name</StyledTableCell>
+                <StyledTableCell>Description</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((user, index) => (
+              {roles.map((role, index) => (
                 <StyledTableRow key={index}>
-                  <TableCell>{user.employee_Id}</TableCell>
-                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{role.name}</TableCell>
+                  <TableCell>{role.description}</TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -88,4 +89,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default RoleList;

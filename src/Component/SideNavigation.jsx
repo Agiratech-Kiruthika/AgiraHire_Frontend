@@ -23,7 +23,7 @@ const SideNavigation = () => {
         <li><NavLink to="/opportunity" activeClassName="active">Opportunities</NavLink></li>
         {/* <li><NavLink to="/signup" activeClassName="active">Employees</NavLink></li> */}
         <li><NavLink to="/userslist" activeClassName="active">Users</NavLink></li>
-        <li><NavLink to="/role" activeClassName="active">Role</NavLink></li>
+        <li><NavLink to="/roleList" activeClassName="active">Role</NavLink></li>
         
       </ul>
     </nav>

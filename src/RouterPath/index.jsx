@@ -7,6 +7,7 @@ import UserList from '../Component/UserList';
 import Home from '../Pages/Home';
 import Dashboard from '../Pages/Dashboard';
 import RoleForm from '../Component/Role';
+import RoleList from '../Component/RoleList';
 
 const RouterPath = () => {
   
@@ -20,6 +21,7 @@ const RouterPath = () => {
       <Route path='/userslist' element={<UserList />} />
       <Route path='/dashboard' element={<Dashboard />} />
       <Route path='/role' element={<RoleForm />} />
+      <Route path='/rolelist' element={<RoleList />} />
    
     </Routes>
   );
