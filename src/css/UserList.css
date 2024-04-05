@@ -13,10 +13,19 @@
 }
 
 .table-header {
-  background-color: #3e3b3b;
-  color: #f0dddd;
+  background-color: #0c0000;
+  color: #ffffff;
+  -webkit-text-fill-color: #f2f2f2;
 }
 
 .table-row:nth-of-type(odd) {
   background-color: #f2f2f2;
+}
+
+
+.button-class{
+  align-items: center;
+  margin-left: 550px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
