@@ -7,7 +7,7 @@ import Axios from 'axios';
 import '../css/Login.css';
 import { jwtDecode } from 'jwt-decode';
 import { useDispatch } from 'react-redux';
-import { setEmail, setUserRole } from '../Redux/Store.jsx'; // Update the path accordingly
+import { setEmail, setUserRole, setToken } from '../Redux/Store'; // Update the import path accordingly
 
 const Login = () => {
   const [email, setEmailState] = useState('');
@@ -16,6 +16,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,47 +33,30 @@ const Login = () => {
       return;
     }
 
-    try {
+
       const response = await Axios.post('https://localhost:7199/api/Auth/login', { email, password });
 
       if (response.data.message === 'Login successful') {
-        const decodedToken = jwtDecode(response.data.data);
-        console.log(decodedToken);
+        const token = response.data.data; // Assuming your API returns the token
+        const decodedToken = jwtDecode(token);
         const userRole = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        console.log(userRole);
-        dispatch(setEmail(email)); // Dispatch action to set email in Redux store
+        
+        dispatch(setEmail(email));
         dispatch(setUserRole(userRole));
+        dispatch(setToken(token)); // Dispatch action to set token in Redux store
+        
+        // Store the token in local storage
+        localStorage.setItem('token', token);
+
         toast.success('Logged in successfully');
         setTimeout(() => {
           navigate('/dashboard');
         }, 1000);
-        
-         // Dispatch action to set user role in Redux store
-
-        // if (userRole === 'Admin') {
-        //   toast.success('Logged in successfully');
-        //   setTimeout(() => {
-        //     navigate('/dashboard');
-        //   }, 1000);
-        // } else {
-        //   toast.error('Access denied. You are not authorized to access this page.');
-        // }
       } else {
         toast.error(response.data.message || 'Login failed. Please try again.');
       }
-    } catch (error) {
-      if (error.response) {
-        if (error.response.status === 401) {
-          toast.error(error.response.data.message || 'Unauthorized. Please try again.');
-        } else if (error.response.status === 400) {
-          toast.error(error.response.data.message || 'Bad request. Please check your inputs.');
-        } else {
-          toast.error('An unexpected error occurred. Please try again.');
-        }
-      } else {
-        toast.error('An unexpected error occurred. Please try again.');
-      }
-    }
+  
+    
   };
 
   return (
@@ -92,7 +76,7 @@ const Login = () => {
                   variant="outlined"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmailState(e.target.value)} // Update state using setEmailState
+                  onChange={(e) => setEmailState(e.target.value)}
                   error={!!emailError}
                   helperText={emailError}
                 />

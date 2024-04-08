@@ -6,9 +6,10 @@ import storage from 'redux-persist/lib/storage';
 const initialState = {
   email: '',
   role: '',
+  token: '', // Added token field
 };
 
-// Create a slice for managing user email and role
+// Create a slice for managing user email, role, and token
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -19,11 +20,19 @@ const userSlice = createSlice({
     setUserRole(state, action) {
       state.role = action.payload;
     },
+    setToken(state, action) { // Added setToken reducer
+      state.token = action.payload;
+    },
+    logout(state) {
+      state.email = '';
+      state.role = '';
+      state.token = '';
+    },
   },
 });
 
 // Extract action creators from the slice
-export const { setEmail, setUserRole } = userSlice.actions;
+export const { setEmail, setUserRole, setToken, logout } = userSlice.actions;
 
 // Create a persisted reducer
 const persistedReducer = persistReducer(

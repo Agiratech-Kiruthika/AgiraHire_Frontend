@@ -23,10 +23,9 @@ const RouterPath = () => {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      {/* Check if user is authenticated and has the required role to access the route */}
       <Route path="/opportunity" element={hasAccess(['Admin','HR']) ? <Opportunity /> : <Navigate to="/" />} />
-      <Route path="/opportunityForm" element={<OpportunityForm />} />
-      <Route path="/signup" element={<UserSignUp />} />
+      {/* <Route path="/opportunityForm" element={<OpportunityForm />} />
+      <Route path="/signup" element={<UserSignUp />} /> */}
       <Route path='/userslist' element={hasAccess(['Admin']) ? <UserList /> : <Navigate to="/" />} />
       <Route path='/dashboard' element={hasAccess(['Admin', 'HR','Interviewer']) ? <Dashboard /> : <Navigate to="/" />} />
       <Route path='/role' element={hasAccess(['Admin']) ? <RoleForm /> : <Navigate to="/" />} />
