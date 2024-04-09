@@ -12,25 +12,25 @@ import Applicant from '../Component/Applicant';
 import RoleList from '../Component/RoleList';
 
 const RouterPath = () => {
-  // Get user role from Redux store
-  const userRole = useSelector(state => state.role);
-
+  // Get user role from Redux store and convert it to lowercase
+  const userRole = useSelector(state => state.role.toLowerCase());
 
   // Define a function to check if the user has access to the route
   const hasAccess = (allowedRoles) => {
-    return allowedRoles.includes(userRole);
+    // Convert allowed roles to lowercase
+    const lowercaseAllowedRoles = allowedRoles.map(role => role.toLowerCase());
+    return lowercaseAllowedRoles.includes(userRole);
   };
 
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path="/opportunity" element={hasAccess(['Admin','hr']) ? <Opportunity /> : <Navigate to="/" />} />
+      <Route path="/opportunity" element={hasAccess(['Admin','HR']) ? <Opportunity /> : <Navigate to="/" />} />
       {/* <Route path="/opportunityForm" element={<OpportunityForm />} />
       <Route path="/signup" element={<UserSignUp />} /> */}
       <Route path='/userslist' element={hasAccess(['Admin']) ? <UserList /> : <Navigate to="/" />} />
-      <Route path='/dashboard' element={hasAccess(['Admin', 'hr','Interviewer']) ? <Dashboard /> : <Navigate to="/" />} />
+      <Route path='/dashboard' element={hasAccess(['Admin', 'HR','Interviewer']) ? <Dashboard /> : <Navigate to="/" />} />
       <Route path='/role' element={hasAccess(['Admin']) ? <RoleForm /> : <Navigate to="/" />} />
-      <Route path='/applicant' element={hasAccess(['Admin','hr']) ? <Applicant /> : <Navigate to="/" />} />
     </Routes>
   );
 }

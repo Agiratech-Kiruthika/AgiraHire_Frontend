@@ -13,6 +13,7 @@
 }
 
 .sidenav ul li {
+  /* text-align: center; */
   padding: 10px 15px;
   border-radius: 10px;
 }
@@ -41,4 +42,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.sidenav ul li a[disabled] {
+  /* Style for disabled NavLink */
+  color: lightgray; /* Change the color as desired */
+  pointer-events: none; /* Disable pointer events for disabled NavLink */
 }
