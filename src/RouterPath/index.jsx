@@ -3,12 +3,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector to access state from Redux store
 import Opportunity from '../Pages/Opportunity';
 import UserSignUp from '../Component/UserSignUp';
-import OpportunityForm from '../Component/OpportunityForm';
+import OpportunityForm from '../Component/Opportunity/CreateOpportunity';
 import UserList from '../Component/UserList';
 import Home from '../Pages/Home';
 import Dashboard from '../Pages/Dashboard';
 import RoleForm from '../Component/Role';
 import RoleList from '../Component/RoleList';
+import UpdateOpportunity from '../Component/Opportunity/UpdateOpportunity'
 
 const RouterPath = () => {
   // Get user role from Redux store and convert it to lowercase
@@ -25,8 +26,9 @@ const RouterPath = () => {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path="/opportunity" element={hasAccess(['admin', 'hr']) ? <Opportunity /> : <Navigate to="/" />} />
-      {/* <Route path="/opportunityForm" element={<OpportunityForm />} />
-      <Route path="/signup" element={<UserSignUp />} /> */}
+      <Route path="/addOpportunity" element={hasAccess(['admin', 'hr']) ?<OpportunityForm />:<Navigate to="/" />} />
+      <Route path="/updateOpportunity/:opportunityId" element={hasAccess(['admin', 'hr']) ?<UpdateOpportunity />:<Navigate to="/" />} />    
+      {/* <Route path="/signup" element={<UserSignUp />} />  */}
       <Route path='/userslist' element={hasAccess(['admin']) ? <UserList /> : <Navigate to="/" />} />
       <Route path='/dashboard' element={hasAccess(['admin', 'hr', 'interviewer']) ? <Dashboard /> : <Navigate to="/" />} />
       <Route path='/role' element={hasAccess(['admin']) ? <RoleForm /> : <Navigate to="/" />} />

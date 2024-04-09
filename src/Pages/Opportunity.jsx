@@ -82,6 +82,12 @@ function Opportunity() {
     setDialogOpen(true);
   };
 
+  const updateOpportunity = (opp) => {
+    // Navigate to the update opportunity form with the opportunity ID as a URL parameter
+    navigate(`/updateOpportunity/${opp.opportunity_Id}`);
+  };
+  
+
   const handleCloseDialog = () => {
     setDialogOpen(false);
   };
@@ -180,7 +186,7 @@ function Opportunity() {
                     <Button style={{ color: '#D37676' }} onClick={() => handleViewDetails(opp)}>
                       <RemoveRedEyeSharpIcon />
                     </Button>
-                    <Button style={{ color: 'green' }} onClick={() => handleViewDetails(opp)}>
+                    <Button style={{ color: 'green' }} onClick={() => updateOpportunity(opp)}>
                       <ModeEditOutlineIcon/>
                     </Button>
                   </TableCell>
