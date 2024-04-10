@@ -11,7 +11,7 @@ export default function OpportunityForm() {
   const [qualification, setQualification] = useState("");
   const [salary, setSalary] = useState("");
   const [datePosted, setDatePosted] = useState("");
-  const [noOfOpenings, setNoOfOpenings] = useState("");
+  const [noOfOpenings, setNoOfOpenings] = useState(0);
   const [status, setStatus] = useState(0); // Default value for status
 
   const handleSubmit = async (e) => {

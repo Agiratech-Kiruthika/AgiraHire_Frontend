@@ -38,6 +38,8 @@ const SideNavigation = () => {
         <li><NavLink to="/userslist" activeClassName="active">Users</NavLink></li>
         <li><NavLink to="/roleList" activeClassName="active">Role</NavLink></li>
         <li><NavLink to='/applicant' activeClassName ="active">Applicant</NavLink></li>
+        <li><NavLink to='/interview' activeClassName ="active">Interview role</NavLink></li>
+        <li><NavLink to='/interviewroundlist' activeClassName ="active">Interview role list</NavLink></li>
         <li><NavLink to="/" activeClassName="active" onClick={handleLogoutClick}>Logout</NavLink></li>
       </ul>
     </nav>
