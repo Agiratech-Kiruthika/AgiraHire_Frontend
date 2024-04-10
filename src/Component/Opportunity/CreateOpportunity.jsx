@@ -4,20 +4,24 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function OpportunityForm() {
+
+
+export default function CreateOpportunity() {
   const [position, setPosition] = useState("");
   const [location, setLocation] = useState("");
   const [employmentType, setEmploymentType] = useState("");
   const [qualification, setQualification] = useState("");
   const [salary, setSalary] = useState("");
   const [datePosted, setDatePosted] = useState("");
-  const [noOfOpenings, setNoOfOpenings] = useState("");
+  const [noOfOpenings, setNoOfOpenings] = useState(0);
   const [status, setStatus] = useState(0); // Default value for status
+
+  // console.log(position,location,employmentType,qualification,salary,datePosted,noOfOpenings,status);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Frontend validation
-    if (!position || !location || !employmentType || !qualification || !salary || !datePosted || !noOfOpenings || !status) {
+    if (!position || !location || !employmentType || !qualification || !salary || !datePosted || !noOfOpenings) {
       toast.error('All fields are required');
       return;
     }
@@ -25,15 +29,15 @@ export default function OpportunityForm() {
       const response = await axios.post('https://localhost:7199/api/Opportunities', {
         position: position,
         location: location,
-        employmentType: employmentType,
+        employment_Type: employmentType,
         qualification: qualification,
         salary: salary,
-        datePosted: datePosted,
-        noOfOpenings: noOfOpenings,
+        date_Posted: datePosted,
+        no_Of_Openings: noOfOpenings,
         status: status,
         isDeleted: false
       });
-      console.log('Opportunity added successfully:', response.data);
+            console.log('Opportunity added successfully:', response.data.data);
       toast.success('Opportunity added successfully');
       // Optionally, redirect to another page after successful form submission
     } catch (error) {

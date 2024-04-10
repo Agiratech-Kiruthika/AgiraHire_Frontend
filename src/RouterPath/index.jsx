@@ -10,6 +10,7 @@ import Dashboard from '../Pages/Dashboard';
 import RoleForm from '../Component/Role';
 import RoleList from '../Component/RoleList';
 import UpdateOpportunity from '../Component/Opportunity/UpdateOpportunity'
+import CreateOpportunity from '../Component/Opportunity/CreateOpportunity';
 
 const RouterPath = () => {
   // Get user role from Redux store and convert it to lowercase
@@ -26,7 +27,7 @@ const RouterPath = () => {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path="/opportunity" element={hasAccess(['admin', 'hr']) ? <Opportunity /> : <Navigate to="/" />} />
-      <Route path="/addOpportunity" element={hasAccess(['admin', 'hr']) ?<OpportunityForm />:<Navigate to="/" />} />
+      <Route path="/addOpportunity" element={hasAccess(['admin', 'hr']) ?<CreateOpportunity />:<Navigate to="/" />} />
       <Route path="/updateOpportunity/:opportunityId" element={hasAccess(['admin', 'hr']) ?<UpdateOpportunity />:<Navigate to="/" />} />    
       {/* <Route path="/signup" element={<UserSignUp />} />  */}
       <Route path='/userslist' element={hasAccess(['admin']) ? <UserList /> : <Navigate to="/" />} />

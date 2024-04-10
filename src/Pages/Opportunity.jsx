@@ -94,7 +94,7 @@ function Opportunity() {
 
   const handleAddOpportunity = () => {
     console.log('Add opportunity clicked');
-    navigate('/opportunityForm');
+    navigate('/addOpportunity');
   };
 
   const handleSearch = () => {
