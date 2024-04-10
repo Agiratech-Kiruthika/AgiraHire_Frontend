@@ -7,9 +7,9 @@ import OpportunityForm from '../Component/Opportunity/CreateOpportunity';
 import UserList from '../Component/UserList';
 import Home from '../Pages/Home';
 import Dashboard from '../Pages/Dashboard';
-import RoleForm from '../Component/Role';
-import Applicant from '../Component/Applicant';
-import RoleList from '../Component/RoleList';
+import RoleForm from '../Component/Roles/Role';
+import Applicant from '../Component/Applicants/Applicant';
+import RoleList from '../Component/Roles/RoleList';
 import UpdateOpportunity from '../Component/Opportunity/UpdateOpportunity'
 import CreateOpportunity from '../Component/Opportunity/CreateOpportunity';
 
