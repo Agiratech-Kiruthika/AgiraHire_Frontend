@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Button, Grid, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { useParams } from 'react-router-dom'; // Import useParams
 import axios from 'axios';
+import { Box, TextField, Button, Grid, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function UpdateOpportunity({ opportunityId }) {
+export default function UpdateOpportunity() {
+  const { id } = useParams(); // Get opportunity ID from URL params
+  console.log(id);
+
   const [position, setPosition] = useState("");
   const [location, setLocation] = useState("");
   const [employmentType, setEmploymentType] = useState("");
@@ -16,42 +20,49 @@ export default function UpdateOpportunity({ opportunityId }) {
 
   useEffect(() => {
     fetchOpportunityData(); // Fetch opportunity data when component mounts
-  }, []);
+  }, [id]);
 
   const fetchOpportunityData = async () => {
     try {
-      const response = await axios.get(`https://localhost:7199/api/Opportunities/${opportunityId}`);
-      const opportunityData = response.data.data;
-      console.log(opportunityData);
-      setPosition(opportunityData.position);
-      setLocation(opportunityData.location);
-      setEmploymentType(opportunityData.employmentType);
-      setQualification(opportunityData.qualification);
-      setSalary(opportunityData.salary);
-      setDatePosted(opportunityData.datePosted);
-      setNoOfOpenings(opportunityData.noOfOpenings);
-      setStatus(opportunityData.status);
+      const response = await axios.get(`https://localhost:7199/api/Opportunities/${id}`);
+      const opportunityData = response.data.data; // Access the nested data property
+      console.log('Opportunity Data:', opportunityData);
+  
+      // Ensure that opportunityData is not null or undefined
+      if (opportunityData) {
+        setPosition(opportunityData.position || '');
+        setLocation(opportunityData.location || '');
+        setEmploymentType(opportunityData.employment_Type || '');
+        setQualification(opportunityData.qualification || '');
+        setSalary(opportunityData.salary || '');
+        setDatePosted(opportunityData.date_Posted || '');
+        setNoOfOpenings(opportunityData.no_Of_Openings || 0);
+        setStatus(opportunityData.status || 0);
+      } else {
+        console.error('Empty opportunity data received');
+      }
     } catch (error) {
       console.error('Error fetching opportunity data:', error);
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Frontend validation
-    if (!position || !location || !employmentType || !qualification || !salary || !datePosted || !noOfOpenings || !status) {
+    if (!position || !location || !employmentType || !qualification || !salary || !datePosted || !noOfOpenings ) {
       toast.error('All fields are required');
       return;
     }
     try {
-      const response = await axios.put(`https://localhost:7199/api/Opportunities/${opportunityId}`, {
+      const response = await axios.put(`https://localhost:7199/api/Opportunities/${id}`, {
         position: position,
         location: location,
-        employmentType: employmentType,
+        employment_Type: employmentType,
         qualification: qualification,
         salary: salary,
-        datePosted: datePosted,
-        noOfOpenings: noOfOpenings,
+        date_Posted: datePosted,
+        no_Of_Openings: noOfOpenings,
         status: status,
         isDeleted: false
       });
