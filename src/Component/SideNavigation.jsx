@@ -32,6 +32,7 @@ const SideNavigation = () => {
           </div>
         </li>
 
+
         {(['admin', 'hr', 'interviewer'].includes(userRole)) && (
           <li>
             <NavLink to="/dashboard" activeClassName="active">
@@ -61,6 +62,7 @@ const SideNavigation = () => {
             <LogoutIcon/> Logout
           </NavLink>
         </li>
+
       </ul>
     </nav>
   );
