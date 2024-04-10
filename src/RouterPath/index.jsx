@@ -7,12 +7,19 @@ import OpportunityForm from '../Component/Opportunity/CreateOpportunity';
 import UserList from '../Component/UserList';
 import Home from '../Pages/Home';
 import Dashboard from '../Pages/Dashboard';
-import RoleForm from '../Component/Role';
-import Applicant from '../Component/Applicant';
-import RoleList from '../Component/RoleList';
-import UpdateOpportunity from '../Component/Opportunity/UpdateOpportunity'
+
+
+
+
 import Interviewround from '../Component/interview_round/Interviewround';
 import InterviewroundList from '../Component/interview_round/InterviewroundList';
+
+import RoleForm from '../Component/Roles/Role';
+import Applicant from '../Component/Applicants/Applicant';
+import RoleList from '../Component/Roles/RoleList';
+import UpdateOpportunity from '../Component/Opportunity/UpdateOpportunity'
+import CreateOpportunity from '../Component/Opportunity/CreateOpportunity';
+
 
 const RouterPath = () => {
   // Get user role from Redux store and convert it to lowercase
@@ -29,6 +36,7 @@ const RouterPath = () => {
     <Routes>
       <Route path='/' element={<Home />} />
       <Route path="/opportunity" element={hasAccess(['admin', 'hr']) ? <Opportunity /> : <Navigate to="/" />} />
+
       {/* <Route path="/opportunityForm" element={<OpportunityForm />} />
       <Route path="/signup" element={<UserSignUp />} /> */}
       <Route path='/userslist' element={hasAccess(['admin']) ? <UserList /> : <Navigate to="/" />} />
@@ -36,6 +44,10 @@ const RouterPath = () => {
       <Route path='/role' element={hasAccess(['admin']) ? <RoleForm /> : <Navigate to="/" />} />
       <Route path='/interview' element={hasAccess(['admin','hr']) ? <Interviewround /> : <Navigate to="/" />} />
       <Route path='/interviewroundlist' element={hasAccess(['admin','hr'])? <InterviewroundList/> : <Navigate to="/"/>} />
+      <Route path="/addOpportunity" element={hasAccess(['admin', 'hr']) ?<CreateOpportunity />:<Navigate to="/" />} />
+      <Route path="/updateOpportunity/:opportunityId" element={hasAccess(['admin', 'hr']) ?<UpdateOpportunity />:<Navigate to="/" />} />    
+      {/* <Route path="/signup" element={<UserSignUp />} />  */}
+    
     </Routes>
   );
 }
