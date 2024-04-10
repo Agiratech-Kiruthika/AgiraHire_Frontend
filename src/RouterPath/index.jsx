@@ -8,6 +8,7 @@ import UserList from '../Component/UserList';
 import Home from '../Pages/Home';
 import Dashboard from '../Pages/Dashboard';
 import RoleForm from '../Component/Role';
+import Applicant from '../Component/Applicant';
 import RoleList from '../Component/RoleList';
 import UpdateOpportunity from '../Component/Opportunity/UpdateOpportunity'
 import CreateOpportunity from '../Component/Opportunity/CreateOpportunity';
