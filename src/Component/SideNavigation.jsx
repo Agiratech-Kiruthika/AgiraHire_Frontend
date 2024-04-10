@@ -32,15 +32,38 @@ const SideNavigation = () => {
           </div>
         </li>
 
-        <li><NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink></li>
-        <li><NavLink to="/opportunity" activeClassName="active">Opportunities</NavLink></li>
-        {/* <li><NavLink to="/signup" activeClassName="active">Employees</NavLink></li> */}
-        <li><NavLink to="/userslist" activeClassName="active">Users</NavLink></li>
-        <li><NavLink to="/roleList" activeClassName="active">Role</NavLink></li>
-        <li><NavLink to='/applicant' activeClassName ="active">Applicant</NavLink></li>
-        <li><NavLink to='/slot' activeClassName ="active">slot</NavLink></li>
-        <li><NavLink to='/slotlist' activeClassName ="active">slotList</NavLink></li>
-        <li><NavLink to="/" activeClassName="active" onClick={handleLogoutClick}>Logout</NavLink></li>
+
+        {(['admin', 'hr', 'interviewer'].includes(userRole)) && (
+          <li>
+            <NavLink to="/dashboard" activeClassName="active">
+              <DashboardCustomizeIcon /> Dashboard
+            </NavLink>
+          </li>
+        )}
+
+        {(['admin', 'hr'].includes(userRole)) && (
+          <li>
+            <NavLink to="/opportunity" activeClassName="active">
+              <ContentPasteSearchIcon/> Opportunities
+            </NavLink>
+          </li>
+        )}
+
+        {(['admin'].includes(userRole)) && (
+          <li>
+            <NavLink to="/userslist" activeClassName="active">
+              <PeopleIcon /> Employees
+            </NavLink>
+          </li>
+        )}
+
+        <li>
+          <NavLink to="/" activeClassName="active" onClick={handleLogoutClick}>
+            <LogoutIcon/> Logout
+          </NavLink>
+        </li>
+
+
       </ul>
     </nav>
   );
