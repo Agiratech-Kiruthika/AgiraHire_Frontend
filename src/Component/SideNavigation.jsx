@@ -57,6 +57,37 @@ const SideNavigation = () => {
           </li>
         )}
 
+     {(['admin', 'hr'].includes(userRole)) && (
+          <li>
+            <NavLink to="/applicant" activeClassName="active">
+              <DashboardCustomizeIcon /> Applicants
+            </NavLink>
+          </li>
+        )}
+
+       {(['admin', 'hr', 'interviewer'].includes(userRole)) && (
+          <li>
+            <NavLink to="/interviewAssignment" activeClassName="active">
+              <DashboardCustomizeIcon /> Interviews
+            </NavLink>
+          </li>
+        )}
+
+       {(['admin', 'hr'].includes(userRole)) && (
+          <li>
+            <NavLink to="/interviewSlot" activeClassName="active">
+              <DashboardCustomizeIcon /> Interview Slots
+            </NavLink>
+          </li>
+        )}
+
+       {(['admin', 'hr'].includes(userRole)) && (
+          <li>
+            <NavLink to="/interviewRound" activeClassName="active">
+              <DashboardCustomizeIcon /> Interview Rounds
+            </NavLink>
+          </li>
+        )}
         <li>
           <NavLink to="/" activeClassName="active" onClick={handleLogoutClick}>
             <LogoutIcon/> Logout

@@ -12,6 +12,9 @@ import Applicant from '../Component/Applicants/Applicant';
 import RoleList from '../Component/Roles/RoleList';
 import UpdateOpportunity from '../Component/Opportunity/UpdateOpportunity'
 import CreateOpportunity from '../Component/Opportunity/CreateOpportunity';
+import InterviewAssignment from '../Component/interview_Assignment/InterviewAssignment';
+import InterviewSlot from '../Component/InterviewSlot/InterviewSlotList';
+import InterviewroundList from '../Component/interview_round/InterviewroundList';
 
 const RouterPath = () => {
   // Get user role from Redux store and convert it to lowercase
@@ -34,6 +37,11 @@ const RouterPath = () => {
       <Route path='/userslist' element={hasAccess(['admin']) ? <UserList /> : <Navigate to="/" />} />
       <Route path='/dashboard' element={hasAccess(['admin', 'hr', 'interviewer']) ? <Dashboard /> : <Navigate to="/" />} />
       <Route path='/role' element={hasAccess(['admin']) ? <RoleForm /> : <Navigate to="/" />} />
+      <Route path="/interviewAssignment" element={hasAccess(['admin', 'hr','interviewer']) ? <InterviewAssignment /> : <Navigate to="/" />} />
+      <Route path="/interviewSlot" element={hasAccess(['admin', 'hr']) ? <InterviewSlot /> : <Navigate to="/" />} />
+      <Route path="/interviewRound" element={hasAccess(['admin', 'hr',]) ? <InterviewroundList/> : <Navigate to="/" />} />
+      <Route path="/applicant" element={hasAccess(['admin', 'hr']) ? <Applicant /> : <Navigate to="/" />} />
+
     </Routes>
   );
 }
