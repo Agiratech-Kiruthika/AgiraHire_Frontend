@@ -33,7 +33,7 @@ const RouterPath = () => {
       <Route path="/opportunity" element={hasAccess(['admin', 'hr']) ? <Opportunity /> : <Navigate to="/" />} />
       <Route path="/addOpportunity" element={hasAccess(['admin', 'hr']) ?<CreateOpportunity />:<Navigate to="/" />} />
       <Route path="/updateOpportunity/:id" element={hasAccess(['admin', 'hr']) ?<UpdateOpportunity />:<Navigate to="/" />} />    
-      {/* <Route path="/signup" element={<UserSignUp />} />  */}
+      <Route path="/signup" element={<UserSignUp />} /> 
       <Route path='/userslist' element={hasAccess(['admin']) ? <UserList /> : <Navigate to="/" />} />
       <Route path='/dashboard' element={hasAccess(['admin', 'hr', 'interviewer']) ? <Dashboard /> : <Navigate to="/" />} />
       <Route path='/role' element={hasAccess(['admin']) ? <RoleForm /> : <Navigate to="/" />} />
