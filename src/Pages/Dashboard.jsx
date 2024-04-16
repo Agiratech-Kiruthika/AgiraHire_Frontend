@@ -1,5 +1,5 @@
-// Dashboard.js
 import React from 'react';
+import { useSelector } from 'react-redux'; // Importing useSelector from react-redux
 import Box from '@mui/material/Box';
 import '../css/Dashboard.css';
 import Grid from '@mui/material/Grid';
@@ -15,28 +15,26 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Dashboard = ({ userEmail }) => {
- 
-  return (
-  
-   <Box 
-   p={2}
+  // Getting opportunitiesCount from Redux state
+  const opportunitiesCount = useSelector((state) => state.opportunitiesCount);
 
-   >
-    <Grid container spacing={2}>  
-          <Grid item xs={6}>
-            <Item>
-              <h2>Ongoing Opportunities</h2>
-            </Item> 
-          </Grid>
-         
-          <Grid item xs={6}>
-             <Item>
-              <h2>Applicants</h2>
-            </Item>
-          </Grid>
+  return (
+    <Box p={2}>
+      <Grid container spacing={2}>  
+        <Grid item xs={6}>
+          <Item>
+            <h2>Ongoing Opportunities</h2>
+            {/* Displaying opportunitiesCount from Redux */}
+            <h2> {opportunitiesCount}</h2>
+          </Item> 
         </Grid>
+        <Grid item xs={6}>
+          <Item>
+            <h2>Applicants</h2>
+          </Item>
+        </Grid>
+      </Grid>
     </Box>
-  
   );
 };
 

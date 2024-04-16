@@ -6,10 +6,11 @@ import storage from 'redux-persist/lib/storage';
 const initialState = {
   email: '',
   role: '',
-  token: '', // Added token field
+  token: '',
+  opportunitiesCount: 0, // Initialize opportunitiesCount field
 };
 
-// Create a slice for managing user email, role, and token
+// Create a slice for managing user and opportunitiesCount
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -20,19 +21,24 @@ const userSlice = createSlice({
     setUserRole(state, action) {
       state.role = action.payload;
     },
-    setToken(state, action) { // Added setToken reducer
+    setToken(state, action) {
       state.token = action.payload;
+    },
+    setOpportunitiesCount(state, action) {
+      state.opportunitiesCount = action.payload;
+      console.log(state.opportunitiesCount);
     },
     logout(state) {
       state.email = '';
       state.role = '';
       state.token = '';
+      state.opportunitiesCount = 0; // Reset opportunitiesCount on logout
     },
   },
 });
 
 // Extract action creators from the slice
-export const { setEmail, setUserRole, setToken, logout } = userSlice.actions;
+export const { setEmail, setUserRole, setToken, setOpportunitiesCount, logout } = userSlice.actions;
 
 // Create a persisted reducer
 const persistedReducer = persistReducer(
@@ -49,7 +55,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST'], // Ignore non-serializable actions related to Redux persist
+        ignoredActions: ['persist/PERSIST'],
       },
     }),
 });
