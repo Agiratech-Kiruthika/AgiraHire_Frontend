@@ -73,6 +73,7 @@ export default function UpdateOpportunity() {
     } catch (error) {
       console.error('Error updating opportunity:', error);
       toast.error('Error updating opportunity');
+      console.error(error);
       // Handle errors (e.g., display error messages)
     }
   };
