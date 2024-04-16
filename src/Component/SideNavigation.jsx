@@ -59,7 +59,7 @@ const SideNavigation = () => {
 
      {(['admin', 'hr'].includes(userRole)) && (
           <li>
-            <NavLink to="/applicant" activeClassName="active">
+            <NavLink to="/ApplicantList" activeClassName="active">
               <DashboardCustomizeIcon /> Applicants
             </NavLink>
           </li>
