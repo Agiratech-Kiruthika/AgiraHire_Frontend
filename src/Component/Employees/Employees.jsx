@@ -10,15 +10,9 @@ import {
   Paper,
   Box,
   Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Typography,
-  IconButton,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
-//import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -29,15 +23,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: '#F0F0F0', // Slightly lighter than original for contrast
+    backgroundColor: '#F0F0F0',
   },
 }));
 
-const UserList = () => {
+const Employees = () => {
   const [users, setUsers] = useState([]);
+  const [roles, setRoles] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Fetch users
     axios.get('https://localhost:7199/api/User/getUsers')
       .then((res) => {
         setUsers(res.data.users);
@@ -46,10 +42,26 @@ const UserList = () => {
         console.error('Error fetching users:', err);
         toast.error('Error fetching users');
       });
+
+    // Fetch roles
+    axios.get('https://localhost:7199/api/Auth/userRoles')
+      .then((res) => {
+        setRoles(res.data.data);
+      })
+      .catch((err) => {
+        console.error('Error fetching roles:', err);
+        toast.error('Error fetching roles');
+      });
   }, []);
 
   const handleAddUsers = () => {
     navigate('/signup');
+  };
+
+  // Function to get role for a given userId
+  const getRoleForUserId = (userId) => {
+    const role = roles.find(role => role.userId === userId);
+    return role ? role.roleId : 'N/A';
   };
 
   return (
@@ -71,6 +83,7 @@ const UserList = () => {
               <TableRow>
                 <StyledTableCell>Employee ID</StyledTableCell>
                 <StyledTableCell>Email</StyledTableCell>
+                <StyledTableCell>Role</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,6 +91,7 @@ const UserList = () => {
                 <StyledTableRow key={index}>
                   <TableCell>{user.employee_Id}</TableCell>
                   <TableCell>{user.email}</TableCell>
+                  <TableCell>{getRoleForUserId(user.employee_Id)}</TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -88,4 +102,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default Employees;
