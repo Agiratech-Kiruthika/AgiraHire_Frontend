@@ -27,6 +27,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
+import { useDispatch } from 'react-redux';
+import { setOpportunitiesCount } from '../Redux/Store'; // Import the action
+
+
 
 // Status text mapping
 const statusText = {
@@ -62,11 +66,16 @@ function Opportunity() {
   const [isSearching, setIsSearching] = useState(false);
   const [page, setPage] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const fetchOpportunities = async () => {
     try {
       const response = await axios.get('https://localhost:7199/api/Opportunities');
       setOpportunity(response.data.data);
+      dispatch(setOpportunitiesCount(response.data.data.length));
+      console.log(response.data.data.length);
+
     } catch (error) {
       toast.error('Error fetching opportunities:', error);
     }

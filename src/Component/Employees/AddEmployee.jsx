@@ -13,11 +13,12 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
+  Grid
 } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "../css/UserSignUp.css";
+
 
 export default function UserSignUp() {
   const [empID, setEmpID] = useState("");
@@ -141,7 +142,6 @@ export default function UserSignUp() {
   const handleClose = () => {
     setOpen(false);
   };
-
   return (
     <>
       <ToastContainer />
@@ -154,54 +154,53 @@ export default function UserSignUp() {
           height: '100vh',
         }}
       >
-        <Box className="signup_formContainer">
-          <Typography className="typo_signup" variant="h6">Signup</Typography>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <FormControl fullWidth>
-                <TextField
-                  id="employee-id-input"
-                  label="Employee ID"
-                  variant="outlined"
-                  type="text"
-                  value={empID}
-                  onChange={handleChangeEmpID}
-                />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl fullWidth>
-                <TextField
-                  id="email-input"
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl fullWidth>
-                <TextField
-                  id="password-input"
-                  label="Password"
-                  variant="outlined"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl fullWidth variant="outlined">
+        <form onSubmit={handleSubmit} className="signup_formContainer">
+          <Grid container spacing={4} style={{ maxWidth: '500px', margin: 'auto', }}>
+            <Grid item xs={12}>
+              <Typography variant="h6" align="center">Add Employee</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="employee-id-input"
+                label="Employee ID"
+                type="text"
+                variant='standard'
+                value={empID}
+                onChange={handleChangeEmpID}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="email-input"
+                label="Email"
+                type="email"
+                variant='standard'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="password-input"
+                label="Password"
+                type="password"
+                variant='standard'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth variant="standard">
                 <InputLabel id="select-role-label">Select Role</InputLabel>
                 <Select
                   labelId="select-role-label"
                   id="select-role"
+                  
                   value={selectedRole}
                   onChange={handleChangeSelectedRole}
-                  label="Select Role"
                 >
                   <MenuItem value="">
                     <em>Select role</em>
@@ -211,25 +210,27 @@ export default function UserSignUp() {
                   ))}
                 </Select>
               </FormControl>
-            </div>
-
-            <Button type="submit" variant="contained" disabled={!empID || !email || !password || !selectedRole}>Sign Up</Button>
-          </form>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Confirm Submission</DialogTitle>
-            <DialogContent>
-              Are you sure you want to submit the form?
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleConfirmSubmit} variant="contained" autoFocus>
-                Confirm
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Box>
+            </Grid>
+            <Grid item xs={12} align="center">
+              <Button type="submit" variant="contained" color="primary" disabled={!empID || !email || !password || !selectedRole}>Sign Up</Button>
+            </Grid>
+          </Grid>
+        </form>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Confirm Submission</DialogTitle>
+          <DialogContent>
+            Are you sure you want to submit the form?
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleConfirmSubmit} variant="contained" autoFocus>
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </>
   );
+  
 }
 
