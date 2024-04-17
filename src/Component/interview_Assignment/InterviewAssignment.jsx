@@ -18,8 +18,8 @@ export default function InterviewAssignment() {
   const [applicantId, setApplicantId] = useState("");
   const [slotId, setSlotId] = useState("");
   const [assignmentStatus, setAssignmentStatus] = useState("");
-  const [roundName, setRoundName] = useState("");
-  const [description, setDescription] = useState("");
+  // const [roundName, setRoundName] = useState("");
+  // const [description, setDescription] = useState("");
   const [applicants, setApplicants] = useState([]);
   const [slots, setSlots] = useState([]);
 
@@ -30,6 +30,7 @@ export default function InterviewAssignment() {
       .then((response) => {
         if (Array.isArray(response.data.data)) {
           setApplicants(response.data.data);
+          console.log(response.data.data)
         } else {
           console.error("Invalid data format for applicants:", response.data);
           toast.error("Error fetching applicants");
@@ -65,9 +66,9 @@ export default function InterviewAssignment() {
     if (
       !applicantId ||
       !slotId ||
-      !assignmentStatus ||
-      !roundName ||
-      !description
+      !assignmentStatus 
+      //!roundName ||
+      //!description
     ) {
       toast.error("All fields are required");
       return;
@@ -80,8 +81,7 @@ export default function InterviewAssignment() {
           applicantId,
           slotId,
           assignmentStatus,
-          roundName,
-          description,
+
         }
       );
       console.log("Interview assignment added successfully:", response.data);
@@ -90,8 +90,8 @@ export default function InterviewAssignment() {
       setApplicantId("");
       setSlotId("");
       setAssignmentStatus("");
-      setRoundName("");
-      setDescription("");
+      //setRoundName("");
+      //setDescription("");
     } catch (error) {
       console.error("Error adding interview assignment:", error);
       toast.error("Error adding interview assignment");
@@ -127,9 +127,9 @@ export default function InterviewAssignment() {
                   value={applicantId}
                   onChange={(e) => setApplicantId(e.target.value)}
                 >
-                  {applicants.map((applicant) => (
-                    <MenuItem key={applicant.id} value={applicant.id}>
-                      {applicant.name}
+                  {applicants.map((item,index) => (
+                    <MenuItem key={index} value={item.applicantId}>
+                      {item.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -164,28 +164,7 @@ export default function InterviewAssignment() {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Round Name"
-                name="roundName"
-                value={roundName}
-                variant="standard"
-                onChange={(e) => setRoundName(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Description"
-                name="description"
-                variant="standard"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                multiline
-                rows={4}
-              />
-            </Grid>
+
             <Grid item xs={12} align="center">
               <Button type="submit" variant="contained" color="primary">
                 Submit

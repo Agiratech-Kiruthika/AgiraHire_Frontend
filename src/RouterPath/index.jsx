@@ -1,13 +1,10 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector to access state from Redux store
-<<<<<<< HEAD
 import Opportunity from '../Component/Opportunity/Opportunity'
-import UserSignUp from '../Component/UserSignUp';
-=======
-import Opportunity from '../Pages/Opportunity';
+
 import UserSignUp from '../Component/Employees/AddEmployee';
->>>>>>> 8610dfdbcd303e0e81f2c98c8a529d61a3715aeb
+
 import OpportunityForm from '../Component/Opportunity/CreateOpportunity';
 import Employees from '../Component/Employees/Employees';
 import Home from '../Pages/Home';
@@ -48,6 +45,7 @@ const RouterPath = () => {
       <Route path="/interviewRound" element={hasAccess(['admin', 'hr',]) ? <InterviewroundList/> : <Navigate to="/" />} />
       <Route path="/applicant" element={hasAccess(['admin', 'hr']) ? <Applicant /> : <Navigate to="/" />} />
       <Route path="/applicantlist" element={hasAccess(['admin', 'hr']) ? <ApplicantList /> : <Navigate to="/" />} />
+      
 
     </Routes>
   );

@@ -28,7 +28,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import { useDispatch } from 'react-redux';
-import { setOpportunitiesCount } from '../Redux/Store'; // Import the action
+import { setOpportunitiesCount } from '../../Redux/Store'; // Import the action
 
 
 
