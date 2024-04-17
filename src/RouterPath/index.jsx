@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Import useSelector to access state from Redux store
-import Opportunity from '../Component/Opportunity/Opportunity'
 
+import Opportunity from '../Component/Opportunity/Opportunity';
 import UserSignUp from '../Component/Employees/AddEmployee';
 
 import OpportunityForm from '../Component/Opportunity/CreateOpportunity';
