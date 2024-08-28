@@ -13,8 +13,7 @@ const LoginPageWithContent = () => {
           designed to simplify and optimize your organization's internal hiring
           process. With intuitive features and user-friendly interface, our
           portal empowers HR departments and hiring managers to efficiently
-          manage internal job postings, applications, and candidate
-          evaluations.wjdhsjfdhkje
+          manage internal job postings, applications, and candidate evaluations.
         </p>
       </div>
       <div className="rightContent">
