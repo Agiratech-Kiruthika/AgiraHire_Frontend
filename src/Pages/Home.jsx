@@ -14,7 +14,6 @@ const LoginPageWithContent = () => {
           process. With intuitive features and user-friendly interface, our
           portal empowers HR departments and hiring managers to efficiently
           manage internal job postings, applications, and candidate
-          evaluations.wjdhsjfdhkje
         </p>
       </div>
       <div className="rightContent">
